@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'Los valores introducidos no coinciden con los registrados en el sistema',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'Name' => 'Nombre',
     'E-Mail Address' => 'Correo electrónico',
@@ -22,5 +22,10 @@ return [
     'Password' => 'Contraseña',
     'Confirm Password' => 'Confirmar contraseña',
     'Register' => 'Registrar',
+    'Login' => 'Iniciar sesión',
+    'Enter' => 'Entrar',
+    'Reset Password' => 'Recuperar contraseña',
+    'Send Password Reset Link' => 'Enviar instrucciones a mi correo',
+    'Logout' => 'Cerrar sesión',
 
 ];
