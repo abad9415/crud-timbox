@@ -18,3 +18,6 @@
 Auth::routes();
 
 Route::get('/', 'AdminController@index')->name('dashboard');
+Route::get('getEmployees', 'AdminController@getEmployees')->name('get.employees');
+Route::get('create-employee', 'AdminController@createEmployee')->name('create-employee');
+Route::post('createEmployee', 'AdminController@createEmployeePost')->name('createEmployeePost');

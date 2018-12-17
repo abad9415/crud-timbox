@@ -10,10 +10,13 @@
     <title>{{ config('app.name', 'Timbox') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    {{--Custom css --}}
+    @yield('css')
 </head>
 <body>
 <div id="app">
@@ -28,7 +31,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link @yield('activeAdministrationEmployees', '')" href="{{ url('/') }}">{{ __('employees.Administration of employees') }}</a>
+                    </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link @yield('activeCreateEmployees', '')" href="{{ route('create-employee') }}">{{ __('employees.create employee') }}</a>
+                    </li>
+
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->
