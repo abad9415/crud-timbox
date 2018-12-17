@@ -78,6 +78,10 @@
                     { data: 'skills'},
                     { data: 'action'}
                 ],
+                "columnDefs": [ {
+                    "targets": [3,4,5,6],
+                    "orderable": false,
+                } ]
             });
         } );
 

@@ -24,13 +24,7 @@ class AdminController extends Controller
 
     public function getEmployees()
     {
-        /*return datatables()
-            ->eloquent(Employees::query())
-            ->toJson();*/
-
         $employees = Employees::select(['id', 'employeeKey', 'name', 'age', 'position', 'address']);
-//        $employees_skills = Employees_skills::select(['id_skill']);
-
         return Datatables::of($employees)
             ->addColumn('skills', function ($employees) {
                 return \App\Employees_skills::where('id_employee', $employees->id)->count();
@@ -87,6 +81,57 @@ class AdminController extends Controller
             }
         }
 
-        return view('dashboard');
+        return redirect('/');
+    }
+
+    public function updateEmployee($id){
+        $skills = Skills::all();
+        $skillsSaved = Employees_skills::select('id_skill')->where('id_employee', $id)->get();
+
+        $skillsReturn = [];
+        foreach($skills as $skill) {
+            $Skillselected = false;
+            foreach($skillsSaved as $skillSaved) {
+                if($skill->id == $skillSaved->id_skill) {
+                    $Skillselected = true;
+                }
+            }
+            array_push($skillsReturn, ['name' => $skill->name, 'selected' => $Skillselected]);
+        }
+
+        $employee = Employees::where('id', $id)->first();
+        return view('employees.createEmployee', ['employee' => $employee, 'skills' => $skillsReturn]);
+    }
+
+    public function updateEmployeePost(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer|between:18,80',
+            'position' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            //Todo you can validate if the value exist in the db: https://stackoverflow.com/a/42663392
+            'skills' => 'array|max:255',
+        ]);
+
+        $idEmployee = (integer) $request->input('id');
+
+        DB::table('employees')->where('id', $idEmployee)->update([
+            'name' => $request->input('name'),
+            'age' => $request->input('age'),
+            'position' => $request->input('position'),
+            'address' => $request->input('address'),
+        ]);
+        if(!empty($idEmployee) && is_integer($idEmployee) && !empty($request->input('skills')) ) {
+            Employees_skills::where('id_employee', $idEmployee)->delete();
+            foreach($request->input('skills') as $skill) {
+                $skillId = Skills::where('name', $skill)->value('id');
+                Employees_skills::create([
+                    'id_employee' => $idEmployee,
+                    'id_skill' => $skillId
+                ]);
+            }
+        }
+
+        return redirect('/');
     }
 }

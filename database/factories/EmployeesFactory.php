@@ -15,7 +15,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Employees::class, function (Faker $faker) {
     return [
-        'id' => $faker->numberBetween(1, 1564789565),
+        'employeeKey' => $faker->numberBetween(1000, 1564789565),
         'name' => $faker->name,
         'age' => $faker->numberBetween(18, 50),
         'position' => $faker->jobTitle,

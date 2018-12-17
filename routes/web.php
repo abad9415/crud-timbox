@@ -21,3 +21,5 @@ Route::get('/', 'AdminController@index')->name('dashboard');
 Route::get('getEmployees', 'AdminController@getEmployees')->name('get.employees');
 Route::get('create-employee', 'AdminController@createEmployee')->name('create-employee');
 Route::post('createEmployee', 'AdminController@createEmployeePost')->name('createEmployeePost');
+Route::get('edit-employee/{id}', 'AdminController@updateEmployee')->name('updateEmployee');
+Route::post('updateEmployee', 'AdminController@updateEmployeePost')->name('updateEmployeePost');
